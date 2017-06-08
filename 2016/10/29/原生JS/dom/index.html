@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.3 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            DOM库及常用方法封装 | 
+        
+        简博
+    </title>
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="LSY">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null,dom">
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="简博">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://imelsy.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="DOM库及常用方法封装 | 简博">
+    <meta property="og:description" content="null">
+    <meta property="og:article:tag" content="dom"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS & jQuery -->
+    
+        <link rel="stylesheet" href="/css/material.min.css">
+        <link rel="stylesheet" href="/css/style.min.css">
+        <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(/img/keji.jpg);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/queue.js"></script>
+    
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#节点"><span class="post-toc-number">1.</span> <span class="post-toc-text">节点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DOM元素的增、删、改、移动"><span class="post-toc-number">2.</span> <span class="post-toc-text">DOM元素的增、删、改、移动</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#添加："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">添加：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#移除："><span class="post-toc-number">2.2.</span> <span class="post-toc-text">移除：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#替换："><span class="post-toc-number">2.3.</span> <span class="post-toc-text">替换：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#克隆："><span class="post-toc-number">2.4.</span> <span class="post-toc-text">克隆：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#移动"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">移动:</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#属性节点"><span class="post-toc-number">3.</span> <span class="post-toc-text">属性节点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自定义属性"><span class="post-toc-number">4.</span> <span class="post-toc-text">自定义属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DOM库"><span class="post-toc-number">5.</span> <span class="post-toc-text">DOM库</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                DOM库及常用方法封装
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/头像.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>LSY</strong>
+        <span>10月 29, 2016</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/dom/">dom</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=DOM库及常用方法封装&url=http://imelsy.com//2016/10/29/原生JS/dom/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=DOM库及常用方法封装&url=http://imelsy.com//2016/10/29/原生JS/dom/index.html&via=LSY" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://imelsy.com//2016/10/29/原生JS/dom/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://imelsy.com//2016/10/29/原生JS/dom/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h3><pre><code>         nodeType     nodeName       nodeValue
+元素节点     1       大写的标签名      null
+文本节点     3          #text         文本内容
+注释节点     8         #comment       注释内容
+document     9          #document      null
+</code></pre><h3 id="DOM元素的增、删、改、移动"><a href="#DOM元素的增、删、改、移动" class="headerlink" title="DOM元素的增、删、改、移动"></a>DOM元素的增、删、改、移动</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"father"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="添加："><a href="#添加：" class="headerlink" title="添加："></a>添加：</h4><p>容器.appendChild(元素)<br>将元素添加到指定容器的末尾<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> title = <span class="built_in">document</span>.createElement(<span class="string">'h3'</span>);</div><div class="line">title.innerHTML = <span class="string">'woshi nibaba'</span>;</div><div class="line">father.appendChild(title);</div></pre></td></tr></table></figure></p>
+<p>容器.insertBefore(新元素,旧元素)<br>在指定容器内 将新元素插入到旧元素的前面<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">father.insertBefore(newTit, title);</div></pre></td></tr></table></figure></p>
+<h4 id="移除："><a href="#移除：" class="headerlink" title="移除："></a>移除：</h4><p>容器.removeChild(元素)<br>在指定容器内 删除元素节点<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">father.removeChild(title);</div></pre></td></tr></table></figure></p>
+<h4 id="替换："><a href="#替换：" class="headerlink" title="替换："></a>替换：</h4><p>容器.replaceChild(新元素，旧元素)<br>在指定容器内 用新元素替换掉 旧元素<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">box.replaceChild(title, father);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>联想：参数是新，旧的函数，基本都是新的在前，旧的在后，唯有字符串方法的 str.replace() 第一个参数是旧的(str中的待替换的字符串或者相应的正则表达式),第二个参数是新的(替换成什么)</p>
+</blockquote>
+<h4 id="克隆："><a href="#克隆：" class="headerlink" title="克隆："></a>克隆：</h4><p>要克隆的元素.cloneNode()<br>返回值就是克隆后的元素,默认只克隆当前元素 不会克隆子孙后代元素，如果为cloneNode(true) 则会克隆当前元素及子孙后代元素</p>
+<h4 id="移动"><a href="#移动" class="headerlink" title="移动:"></a>移动:</h4><p>利用DOM映射的特性<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"outer"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"middle"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"inner"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		outer.appendChild(inner);</div><div class="line">	&#125;, <span class="number">2000</span>)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h3 id="属性节点"><a href="#属性节点" class="headerlink" title="属性节点"></a>属性节点</h3><p>创建：<br>目标对象.setAttribute(“属性名”,”属性值”)<br>会显示在html元素的标签内</p>
+<p>获取：<br>目标对象.getAttribute(“属性名”)</p>
+<h3 id="自定义属性"><a href="#自定义属性" class="headerlink" title="自定义属性"></a>自定义属性</h3><p>obj.name=”xxx<br>不会显示在html中</p>
+<blockquote>
+<p>联想：jquery中获取表单元素自带的属性，比如checked等，需要使用ele.prop(‘checked’)，ele.prop(‘checked’, ‘checked’); 不能用attr()，attr一般用于自己添加的属性节点。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">// 创建文档碎片</span></div><div class="line"><span class="keyword">var</span> frg = <span class="built_in">document</span>.createDocumentFragment();</div></pre></td></tr></table></figure>
+<h3 id="DOM库"><a href="#DOM库" class="headerlink" title="DOM库"></a>DOM库</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by maxin on 2016/10/26.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">var</span> kirin = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> isStanderBrowser = !!<span class="built_in">window</span>.getComputedStyle;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 类数组转换为数组</div><div class="line">     * @param likeAry</div><div class="line">     * @returns &#123;*&#125; 数组</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">listToArray</span>(<span class="params">likeAry</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (isStanderBrowser) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.slice.call(likeAry);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">var</span> ary = [];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; likeAry.length; i++) &#123;</div><div class="line">                ary[ary.length] = likeAry[i];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> ary;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*  JSON字符串转换为为JSON对象</span></div><div class="line">     *   @params: JSON字符串</div><div class="line">     *   @return: JSON对象</div><div class="line">     * */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">jsonParse</span>(<span class="params">jsonStr</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">window</span>.JSON ? <span class="built_in">JSON</span>.parse(jsonStr) : <span class="built_in">eval</span>(<span class="string">'('</span> + jsonStr + <span class="string">')'</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取或者设置浏览器盒子模型的属性值</div><div class="line">     * @param attr 属性</div><div class="line">     * @param value 值</div><div class="line">     * @returns 只传属性就是获取值，都传就是设置</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">win</span>(<span class="params">attr, value</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> value === <span class="string">'undefined'</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">document</span>.documentElement[attr] || <span class="built_in">document</span>.body[attr];</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">document</span>.documentElement[attr] = value;</div><div class="line">        <span class="built_in">document</span>.body[attr] = value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 求元素相对于body的偏移量</div><div class="line">     * @param ele 元素</div><div class="line">     * @returns &#123;&#123;left: 左偏移, top: 上偏移&#125;&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">offset</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> l = <span class="literal">null</span>;</div><div class="line">        <span class="keyword">var</span> t = <span class="literal">null</span>;</div><div class="line">        l += ele.offsetLeft;</div><div class="line">        t += ele.offsetTop;</div><div class="line">        <span class="keyword">var</span> par = ele.offsetParent;</div><div class="line">        <span class="keyword">while</span> (par) &#123;</div><div class="line">            l += par.offsetLeft + par.clientLeft;</div><div class="line">            t += par.offsetTop + par.clientTop;</div><div class="line">            par = par.offsetParent;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> &#123;<span class="attr">left</span>: l, <span class="attr">top</span>: t&#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取元素已经生成的样式值，兼容IE</div><div class="line">     * @param ele 元素</div><div class="line">     * @param attr 想要获取样式的属性</div><div class="line">     * @returns &#123;Number&#125; 样式值</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCss</span>(<span class="params">ele, attr</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> val = <span class="literal">null</span>;</div><div class="line">        <span class="keyword">if</span> (isStanderBrowser) &#123;</div><div class="line">            val = <span class="built_in">window</span>.getComputedStyle(ele)[attr];</div><div class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// ie</span></div><div class="line">            <span class="keyword">if</span> (attr == <span class="string">'opacity'</span>) &#123;</div><div class="line">                val = ele.currentStyle.filter; <span class="comment">// alpha(opacity=55.5)</span></div><div class="line">                <span class="keyword">var</span> reg = <span class="regexp">/^alpha\(opacity=(\d+(?:\.\d+)?)\)$/</span>;</div><div class="line">                val = reg.test(val) ? reg.exec(val)[<span class="number">1</span>] / <span class="number">100</span> : <span class="number">1</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                val = ele.currentStyle[attr];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> reg = <span class="regexp">/^-?\d+(\.\d+)?(px)?$/</span>;</div><div class="line">        <span class="keyword">return</span> reg.test(val) ? <span class="built_in">parseFloat</span>(val) : val;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 设置盒子模型的css样式</div><div class="line">     * @param ele 元素</div><div class="line">     * @param attr 元素样式属性名</div><div class="line">     * @param value 设置的值</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setCss</span>(<span class="params">ele, attr, value</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (attr == <span class="string">'opacity'</span>) &#123;</div><div class="line">            ele.style.opacity = value;</div><div class="line">            ele.style.filter = <span class="string">'alpha(opacity='</span> + value * <span class="number">100</span> + <span class="string">')'</span>;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (attr == <span class="string">'float'</span>) &#123;</div><div class="line">            ele.style.cssFloat = value;</div><div class="line">            ele.style.styleFloat = value;   <span class="comment">//ielow</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> reg = <span class="regexp">/width|height|top|left|right|bottom|(margin|padding)(Left|Right|Top|Bottom)?/</span>;</div><div class="line">        <span class="keyword">if</span> (reg.test(attr)) &#123;</div><div class="line">            <span class="keyword">if</span> (!<span class="built_in">isNaN</span>(value)) &#123;</div><div class="line">                value += <span class="string">'px'</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        ele.style[attr] = value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据类名获取元素(兼容ielow)</div><div class="line">     * @param className 类名</div><div class="line">     * @param context 确定查询范围,不传是document</div><div class="line">     * @returns &#123;*&#125; 返回符合的元素集合</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getElesByClass</span>(<span class="params">className, context</span>) </span>&#123;</div><div class="line">        context = context || <span class="built_in">document</span>;</div><div class="line">        <span class="keyword">if</span> (isStanderBrowser) &#123;</div><div class="line">            <span class="keyword">return</span> listToArray(context.getElementsByClassName(className));</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// for ielow</span></div><div class="line">        <span class="keyword">var</span> classNameAry = className.replace(<span class="regexp">/(^ +| +$)/g</span>, <span class="string">''</span>).split(<span class="regexp">/ +/</span>);</div><div class="line">        <span class="keyword">var</span> tags = context.getElementsByTagName(<span class="string">'*'</span>);</div><div class="line">        <span class="keyword">var</span> ary = [];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; tags.length; i++) &#123;</div><div class="line">            <span class="keyword">var</span> curTag = tags[i];</div><div class="line">            <span class="keyword">var</span> isGoodTag = <span class="literal">true</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; classNameAry.length; j++) &#123;</div><div class="line">                <span class="keyword">var</span> curClass = classNameAry[j];</div><div class="line">                <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(^| +)'</span> + curClass + <span class="string">'( +|$)'</span>);</div><div class="line">                <span class="keyword">if</span> (!reg.test(curTag.className)) &#123;</div><div class="line">                    isGoodTag = <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            isGoodTag &amp;&amp; ary.push(curTag);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ary;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 批量设置元素样式</div><div class="line">     * @param ele 元素</div><div class="line">     * @param group &#123;width: 100px, float: left&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setGroupCss</span>(<span class="params">ele, group</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(group) == <span class="string">'[object Object]'</span>) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> group) &#123;</div><div class="line">                setCss(ele, key, group[key]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 把getCss、setCss、setGroupCss集成为一个方法</div><div class="line">     * @param ele 元素名</div><div class="line">     * @returns &#123;Number&#125; 如果是获取样式,就返回样式值</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">css</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> secondParam = <span class="built_in">arguments</span>[<span class="number">1</span>];</div><div class="line">        <span class="keyword">var</span> thirdParam = <span class="built_in">arguments</span>[<span class="number">2</span>];</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> secondParam == <span class="string">'string'</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> thirdParam == <span class="string">'undefined'</span>) &#123;</div><div class="line">                <span class="keyword">return</span> getCss(ele, secondParam);</div><div class="line">            &#125;</div><div class="line">            setCss(ele, secondParam, thirdParam);</div><div class="line">        &#125;</div><div class="line">        secondParam = secondParam || [];</div><div class="line">        <span class="keyword">if</span> (secondParam.toString() == <span class="string">'[object Object]'</span>) &#123;</div><div class="line">            setGroupCss(ele, secondParam);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取n到m间的随机整数</div><div class="line">     * @param n</div><div class="line">     * @param m</div><div class="line">     * @returns &#123;number&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getRandom</span>(<span class="params">n, m</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="built_in">isNaN</span>(n) || <span class="built_in">isNaN</span>(m)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">Math</span>.random();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (m - n) + n);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 判断元素是否有一个类名</div><div class="line">     * @param ele</div><div class="line">     * @param className</div><div class="line">     * @returns &#123;boolean&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasClass</span>(<span class="params">ele, className</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(^| +)'</span> + className + <span class="string">'( +|$)'</span>).test(ele.className);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 给元素添加类</div><div class="line">     * @param ele</div><div class="line">     * @param className</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addClass</span>(<span class="params">ele, className</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> classAry = className.replace(<span class="regexp">/(^ +| +$)/g</span>, <span class="string">''</span>).split(<span class="regexp">/ +/</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; classAry.length; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (!hasClass(ele, classAry[i])) &#123;</div><div class="line">                ele.className += <span class="string">' '</span> + classAry[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 给元素移除类</div><div class="line">     * @param ele</div><div class="line">     * @param className</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">removeClass</span>(<span class="params">ele, className</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> classAry = className.replace(<span class="regexp">/^ +| +$/g</span>, <span class="string">''</span>).split(<span class="regexp">/ +/</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; classAry.length; i++) &#123;</div><div class="line">            <span class="keyword">var</span> curClass = classAry[i];</div><div class="line">            <span class="keyword">if</span> (hasClass(ele, curClass)) &#123;</div><div class="line">                <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(^| +)'</span> + curClass + <span class="string">'( +|$)'</span>, <span class="string">'g'</span>);</div><div class="line">                ele.className = ele.className.replace(reg, <span class="string">' '</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取上一个哥哥元素节点</div><div class="line">     * @param ele</div><div class="line">     * @returns &#123;*&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">prev</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (isStanderBrowser) &#123;</div><div class="line">            <span class="keyword">return</span> ele.previousElementSibling;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> pre = ele.previousSibling;</div><div class="line">        <span class="keyword">while</span> (pre &amp;&amp; pre.nodeType != <span class="number">1</span>) &#123;</div><div class="line">            pre = pre.previousSibling;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> pre;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取下一个弟弟元素节点</div><div class="line">     * @param ele</div><div class="line">     * @returns &#123;*&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (isStanderBrowser) &#123;</div><div class="line">            <span class="keyword">return</span> ele.nextElementSibling;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> nex = ele.nextSibling;</div><div class="line">        <span class="keyword">while</span> (nex &amp;&amp; nex.nodeType != <span class="number">1</span>) &#123;</div><div class="line">            nex = nex.nextSibling;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> nex;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取所有哥哥元素节点</div><div class="line">     * @param ele</div><div class="line">     * @returns &#123;Array.&lt;*&gt;&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">prevAll</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> ary = [];</div><div class="line">        <span class="keyword">var</span> pre = prev(ele);</div><div class="line">        <span class="keyword">while</span> (pre) &#123;</div><div class="line">            ary.push(pre);</div><div class="line">            pre = prev(pre);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ary.reverse();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取所有弟弟元素节点</div><div class="line">     * @param ele</div><div class="line">     * @returns &#123;Array&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">nextAll</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> ary = [];</div><div class="line">        <span class="keyword">var</span> nex = next(ele);</div><div class="line">        <span class="keyword">while</span> (nex) &#123;</div><div class="line">            ary.push(nex);</div><div class="line">            nex = next(nex);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ary;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取所有兄弟元素节点</div><div class="line">     * @param ele</div><div class="line">     * @returns &#123;Array.&lt;*&gt;&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">siblings</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> prevAll(ele).concat(nextAll(ele));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取当前元素的索引</div><div class="line">     * @param ele</div><div class="line">     * @returns &#123;Number&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> prevAll(ele).length;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">children</span>(<span class="params">ele, tagName</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> ary = [];</div><div class="line">        <span class="keyword">if</span> (isStanderBrowser) &#123;</div><div class="line">            ary = listToArray(ele.children);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">var</span> childs = ele.childNodes;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; childs.length; i++) &#123;</div><div class="line">                <span class="keyword">if</span> (childs[i].nodeType == <span class="number">1</span>) &#123;</div><div class="line">                    ary.push(childs[i]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> tagName == <span class="string">'string'</span>) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</div><div class="line">                <span class="keyword">if</span> (ary[i].nodeName !== tagName.toUpperCase()) &#123;</div><div class="line">                    ary.splice(i, <span class="number">1</span>);</div><div class="line">                    i--;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ary;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">listToArray</span>: listToArray,</div><div class="line">        <span class="attr">jsonParse</span>: jsonParse,</div><div class="line">        <span class="attr">win</span>: win,</div><div class="line">        <span class="attr">offset</span>: offset,</div><div class="line">        <span class="attr">getCss</span>: getCss,</div><div class="line">        <span class="attr">setCss</span>: setCss,</div><div class="line">        <span class="attr">css</span>: css,</div><div class="line">        <span class="attr">getElesByClass</span>: getElesByClass,</div><div class="line">        <span class="attr">getRandom</span>: getRandom,</div><div class="line">        <span class="attr">hasClass</span>: hasClass,</div><div class="line">        <span class="attr">addClass</span>: addClass,</div><div class="line">        <span class="attr">removeClass</span>: removeClass,</div><div class="line">        <span class="attr">prev</span>: prev,</div><div class="line">        <span class="attr">next</span>: next,</div><div class="line">        <span class="attr">prevAll</span>: prevAll,</div><div class="line">        <span class="attr">nextAll</span>: nextAll,</div><div class="line">        <span class="attr">siblings</span>: siblings,</div><div class="line">        <span class="attr">index</span>: index,</div><div class="line">        <span class="attr">children</span>: children</div><div class="line">    &#125;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+
+
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/05/30/hello-world/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2016/02/06/原生JS/linux_cmd/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/头像.jpg" alt="LSY's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        iliangshangyu@126.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/02/">二月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/01/">一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/09/">九月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/05/">五月 2015<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/04/">四月 2015<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/JS深入系列/">JS深入系列<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/dom/">dom<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js基础/">js基础<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/linux/">linux<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/原生JS/">原生JS<span class="sidebar_archives-count">11</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.svg);">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.svg);">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.svg);">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;简博
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+    <script src="/js/lazyload.min.js"></script>
+    <script src="/js/js.min.js"></script>
+
+
+
+    <script src="/js/nprogress.js"></script>
+
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+        <script src="/js/smoothscroll.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script>
+    <!-- Offer LazyLoad -->
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    <!-- Start Queue -->
+    $(document).ready(function(){
+        setTimeout(function(){
+            setInterval(function(){
+                queue.execNext();
+            },200);
+        },3000);
+    });
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
